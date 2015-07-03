@@ -13,6 +13,7 @@ import org.json.JSONException;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
+import com.parse.ParseException;
 
 public class ParsePlugin extends CordovaPlugin {
     public static final String TAG = "ParsePlugin";
@@ -65,14 +66,18 @@ public class ParsePlugin extends CordovaPlugin {
         }
         return false;
     }
-
     private void initialize(final CallbackContext callbackContext, final JSONArray args) {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-            PushService.setDefaultPushCallback(cordova.getActivity(), cordova.getActivity().getClass());
-            ParseInstallation.getCurrentInstallation().saveInBackground();
-            callbackContext.success();
-            }
+                PushService.setDefaultPushCallback(cordova.getActivity(), cordova.getActivity().getClass());
+                try {
+                  ParseInstallation.getCurrentInstallation().save();
+                  callbackContext.success();
+                } catch(ParseException pe) {
+                  callbackContext.error("Parse error " + pe.getCode()
+                      + ", Can't save Installation at this time.");
+                }
+                }
         });
     }
 
