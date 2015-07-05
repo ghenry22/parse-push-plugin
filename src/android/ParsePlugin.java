@@ -69,15 +69,15 @@ public class ParsePlugin extends CordovaPlugin {
     private void initialize(final CallbackContext callbackContext, final JSONArray args) {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                PushService.setDefaultPushCallback(cordova.getActivity(), cordova.getActivity().getClass());
                 try {
                   ParseInstallation.getCurrentInstallation().save();
+                  PushService.setDefaultPushCallback(cordova.getActivity(), cordova.getActivity().getClass());
                   callbackContext.success();
                 } catch(ParseException pe) {
                   callbackContext.error("Parse error " + pe.getCode()
                       + ", Can't save Installation at this time.");
                 }
-                }
+            }
         });
     }
 
