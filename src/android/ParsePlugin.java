@@ -103,13 +103,13 @@ public class ParsePlugin extends CordovaPlugin {
   }
 
   private void getSubscriptions(final CallbackContext callbackContext) {
-      cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-               //Set<String> subscriptions = PushService.getSubscriptions(cordova.getActivity());
-               List<String> subscriptions = ParseInstallation.getCurrentInstallation().getList("channels");
-               callbackContext.success(subscriptions.toString());
-          }
-      });
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        //Set<String> subscriptions = PushService.getSubscriptions(cordova.getActivity());
+        List<String> subscriptions = ParseInstallation.getCurrentInstallation().getList("channels");
+        callbackContext.success(subscriptions.toString());
+      }
+    });
   }
 
   private void subscribe(final String channel, final CallbackContext callbackContext) {
