@@ -73,9 +73,8 @@
     if (succeeded) {
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }else{
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                      messageAsString:@"Parse subscribe Error"];
-      NSLog(@"Error: %@ %@", error, [error userInfo]);
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse subscribe Error"];
+      //NSLog(@"Error: %@ %@", error, [error userInfo]);
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
   }];
@@ -93,9 +92,8 @@
     if (succeeded) {
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }else{
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                      messageAsString:@"Parse unsubscribe Error"];
-      NSLog(@"Error: %@ %@", error, [error userInfo]);
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse unsubscribe Error"];
+      //NSLog(@"Error: %@ %@", error, [error userInfo]);
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
   }];    
