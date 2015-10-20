@@ -71,9 +71,9 @@
   //[currentInstallation saveInBackground];
   [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     if (succeeded) {
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }else{
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse subscribe Error"];
+      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse subscribe Error"];
       //NSLog(@"Error: %@ %@", error, [error userInfo]);
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -90,9 +90,9 @@
   //[currentInstallation saveInBackground];
   [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     if (succeeded) {
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }else{
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse unsubscribe Error"];
+      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse unsubscribe Error"];
       //NSLog(@"Error: %@ %@", error, [error userInfo]);
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
