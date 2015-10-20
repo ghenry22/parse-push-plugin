@@ -133,12 +133,23 @@ public class ParsePlugin extends CordovaPlugin {
   }
 
   private void unsubscribe(final String channel, final CallbackContext callbackContext) {
-      cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-              PushService.unsubscribe(cordova.getActivity(), channel);
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        ParsePush.unsubscribeInBackground(channel, new SaveCallback() {
+          @Override
+          public void done(ParseException e) {
+            if (e == null) {
               callbackContext.success();
+            }else{
+              Log.e("com.parse.push", "failed to unsubscribe for push", e);
+              callbackContext.error("Parse Error "+e.getCode());
+            }
           }
-      });
+        });
+        //PushService.unsubscribe(cordova.getActivity(), channel);
+        //callbackContext.success();
+      }
+    });
   }
 
 }
