@@ -47,56 +47,60 @@
 
 - (void)subscribe: (CDVInvokedUrlCommand *)command
 {
-  // Not sure if this is necessary
-  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-      UIUserNotificationSettings *settings =
-      [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
-                                                   UIUserNotificationTypeBadge |
-                                                   UIUserNotificationTypeSound
-                                        categories:nil];
-      [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-      [[UIApplication sharedApplication] registerForRemoteNotifications];
-  }
-  else {
-      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-          UIRemoteNotificationTypeBadge |
-          UIRemoteNotificationTypeAlert |
-          UIRemoteNotificationTypeSound];
-  }
-
-  CDVPluginResult* pluginResult = nil;
-  PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-  NSString *channel = [command.arguments objectAtIndex:0];
-  [currentInstallation addUniqueObject:channel forKey:@"channels"];
-  //[currentInstallation saveInBackground];
-  [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    if (succeeded) {
-      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    }else{
-      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse subscribe Error"];
-      //NSLog(@"Error: %@ %@", error, [error userInfo]);
+  [self.commandDelegate runInBackground:^{
+    // Not sure if this is necessary
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
+                                                     UIUserNotificationTypeBadge |
+                                                     UIUserNotificationTypeSound
+                                          categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+            UIRemoteNotificationTypeBadge |
+            UIRemoteNotificationTypeAlert |
+            UIRemoteNotificationTypeSound];
+    }
+  
+    CDVPluginResult* pluginResult = nil;
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSString *channel = [command.arguments objectAtIndex:0];
+    [currentInstallation addUniqueObject:channel forKey:@"channels"];
+    //[currentInstallation saveInBackground];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+      if (succeeded) {
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+      } else {
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse subscribe Error"];
+        //NSLog(@"Error: %@ %@", error, [error userInfo]);
+      }
+      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
   }];
-
 }
 
 - (void)unsubscribe: (CDVInvokedUrlCommand *)command
 {
-  CDVPluginResult* pluginResult = nil;
-  PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-  NSString *channel = [command.arguments objectAtIndex:0];
-  [currentInstallation removeObject:channel forKey:@"channels"];
-  //[currentInstallation saveInBackground];
-  [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    if (succeeded) {
-      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    }else{
-      CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse unsubscribe Error"];
-      //NSLog(@"Error: %@ %@", error, [error userInfo]);
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];    
+  [self.commandDelegate runInBackground:^{
+    CDVPluginResult* pluginResult = nil;
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSString *channel = [command.arguments objectAtIndex:0];
+    [currentInstallation removeObject:channel forKey:@"channels"];
+    //[currentInstallation saveInBackground];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+      if (succeeded) {
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+      } else {
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Parse unsubscribe Error"];
+        //NSLog(@"Error: %@ %@", error, [error userInfo]);
+      }
+      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+  }];
+  
   //pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
   //[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
