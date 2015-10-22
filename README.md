@@ -25,8 +25,8 @@ Installation
 Pick one of these two commands:
 
 ```
-phonegap local plugin add https://github.com/benjie/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
-cordova plugin add https://github.com/benjie/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
+phonegap local plugin add https://github.com/bal200/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
+cordova plugin add https://github.com/bal200/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
 ```
 
 Initial Setup
