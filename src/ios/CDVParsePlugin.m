@@ -58,10 +58,11 @@
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
     else {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-            UIRemoteNotificationTypeBadge |
-            UIRemoteNotificationTypeAlert |
-            UIRemoteNotificationTypeSound];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:
+            [UIUserNotificationSettings settingsForTypes:
+            (UIUserNotificationTypeSound |
+            UIUserNotificationTypeAlert |
+            UIUserNotificationTypeBadge) categories:nil]];
     }
 
     CDVPluginResult* pluginResult = nil;
