@@ -139,7 +139,7 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
 
     activityIntent.putExtras(intent).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-    ParseAnalytics.trackAppOpened(intent);
+    ParseAnalytics.trackAppOpenedInBackground(intent);
 
     // allow a urlHash parameter for hash as well as query params.
     // This lets the app know what to do at coldstart by opening a PN.

@@ -62,16 +62,22 @@ public class ParsePushApplication extends Application {
       if (config.getServerUrl().equalsIgnoreCase("PARSE_DOT_COM")) {
         //
         //initialize for use with legacy parse.com
-        Parse.initialize(this, config.getAppId(), config.getClientKey());
+        //Parse.initialize(this, config.getAppId(), config.getClientKey());
       } else {
         Log.d(LOGTAG, "ServerUrl " + config.getServerUrl());
         Log.d(LOGTAG, "NOTE: The trailing slash is important, e.g., https://mydomain.com:1337/parse/");
         Log.d(LOGTAG, "NOTE: Set the clientKey if your server requires it, otherwise it can be null");
         //
         // initialize for use with opensource parse-server
-        Parse.initialize(new Parse.Configuration.Builder(this).applicationId(config.getAppId())
-            .server(config.getServerUrl()).clientKey(config.getClientKey()).build());
+        Parse.initialize(new Parse.Configuration.Builder(this)
+            .applicationId( config.getAppId() )
+            .server( config.getServerUrl() )
+            .clientKey( config.getClientKey() )
+            .build()
+        );
       }
+
+      //Log.d(LOGTAG, ParseInstallation.getCurrentInstallation().get("deviceToken").toString());
 
       Log.d(LOGTAG, "Saving Installation in background");
       //
