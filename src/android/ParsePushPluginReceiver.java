@@ -71,7 +71,7 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
       }
       else {
         // check if this is a silent notification
-        Notification notification = getNotification(context, intent);
+        Notification notification = getNotification(context, intent).build();
 
         if (notification != null) {
           // use tag + notification id=0 to limit the number of notifications in the tray
@@ -82,7 +82,7 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
              
               String id = context.getPackageName();
               CharSequence name = getAppName(context);
-              String description = getNotification(context, intent).extras.getCharSequence(Notification.EXTRA_TEXT).toString();
+              String description = notification.extras.getCharSequence(Notification.EXTRA_TEXT).toString();
               
               int importance = NotificationManager.IMPORTANCE_MAX;
               NotificationChannel mChannel = new NotificationChannel(id, name, importance);
@@ -159,7 +159,7 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
   }
 
   @Override
-  protected Notification getNotification(Context context, Intent intent) {
+  protected NotificationCompat.Builder getNotification(Context context, Intent intent) {
     //
     // Build a notification entry for the tray
     //
@@ -254,29 +254,29 @@ public class ParsePushPluginReceiver extends ParsePushBroadcastReceiver {
     }
 
     if (!isSilent) {
-      return builder.build();
+      return builder;
     }
 
     return null;
   }
 
-  private static JSONObject getPushData(Intent intent) {
-    JSONObject pnData = null;
-    try {
-      pnData = new JSONObject(intent.getStringExtra(KEY_PUSH_DATA));
-    } catch (JSONException e) {
-      Log.e(LOGTAG, "JSONException while parsing push data:", e);
-    } finally {
-      return pnData;
-    }
-  }
+//  private static JSONObject getPushData(Intent intent) {
+//    JSONObject pnData = null;
+//    try {
+//      pnData = new JSONObject(intent.getStringExtra(KEY_PUSH_DATA));
+//    } catch (JSONException e) {
+//      Log.e(LOGTAG, "JSONException while parsing push data:", e);
+//    } finally {
+//      return pnData;
+//    }
+//  }
 
   private static String getAppName(Context context) {
     CharSequence appName = context.getPackageManager().getApplicationLabel(context.getApplicationInfo());
     return (String) appName;
   }
 
-  private static String getNotificationTag(Context context, Intent intent) {
+  private String getNotificationTag(Context context, Intent intent) {
     return getPushData(intent).optString("title", getAppName(context));
   }
 
