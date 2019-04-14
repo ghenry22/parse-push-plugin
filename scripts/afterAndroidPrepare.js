@@ -38,6 +38,15 @@ module.exports = function (context) {
       .pipe(fs.createWriteStream(path.join(iconTargetPath, parsePushNotificationIcon + '.png')));
   }
 
+  // Copy the firebase google-services.json file
+  var googleServicesJson = path.join(context.opts.projectRoot, 'google-services.json');
+  if(fs.existsSync(googleServicesJson)) {
+    fs.createReadStream( googleServicesJson )
+    .pipe(fs.createWriteStream(path.join(context.opts.projectRoot, 'platforms', 'android', 'app', 'google-services.json')));
+  }else{
+    console.error("Error: google-services.json missing! Get it from the Firebase console, and put it in the project root folder.");
+  }
+
   // Copy gcm sender id from config.xml into AndroidManifest
   // detect parse.com or parse-server mode
   var parseServerUrl = configXml.data.find('preference[@name="ParseServerUrl"]').get('value');
