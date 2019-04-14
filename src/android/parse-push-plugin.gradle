@@ -3,6 +3,12 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+buildscript {
+    dependencies {
+        classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
+    }
+}
 
+apply plugin: 'com.google.gms.google-services'
 
 
