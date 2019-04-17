@@ -1,14 +1,28 @@
-repositories {
-    mavenCentral()
-    maven { url "https://jitpack.io" }
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    // dependencies {
+    //     classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
+    // }
 }
 
-buildscript {
-    dependencies {
-        classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
+allprojects {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 
-apply plugin: 'com.google.gms.google-services'
+ext.postBuildExtras = {
+    apply plugin: 'com.google.gms.google-services'
+}
+
 
 
