@@ -54,8 +54,8 @@
          <uses-permission android:name="android.permission.VIBRATE" />
       </config-file>
 
-      <framework src="com.github.parse-community.Parse-SDK-Android:parse:1.18.5" />
-      <framework src="com.github.parse-community.Parse-SDK-Android:fcm:1.18.5" />
+      <framework src="com.github.parse-community.Parse-SDK-Android:parse:1.19.0" />
+      <framework src="com.github.parse-community.Parse-SDK-Android:fcm:1.19.0" />
       <framework src="me.leolin:ShortcutBadger:1.1.17@aar" />
       
       <framework src="src/android/parse-push-plugin.gradle" custom="true" type="gradleReference" />
