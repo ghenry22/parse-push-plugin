@@ -5,6 +5,13 @@
    <description>Parse.Push plugin for phonegap/cordova/ionic framework</description>
 	<keywords>cordova,phonegap,ionic framework, parse server, parse push, push notification</keywords>
 
+    <engines>
+        <engine name="cordova" version=">=6.0.0" />
+        <engine name="apple-ios" version=">=10.0.0" />
+        <engine name="cordova-android" version=">=6"/>
+        <engine name="cordova-plugman" version=">=4.2.0"/><!-- needed for gradleReference support -->
+    </engines>
+	
    <js-module src="www/parse-push-plugin.js" name="ParsePushPlugin">
       <clobbers target="ParsePushPlugin" />
    </js-module>
@@ -47,7 +54,6 @@
          <uses-permission android:name="android.permission.VIBRATE" />
       </config-file>
 
-      <framework src="com.google.gms:google-services:4.0.1" />
       <framework src="com.github.parse-community.Parse-SDK-Android:parse:1.18.5" />
       <framework src="com.github.parse-community.Parse-SDK-Android:fcm:1.18.5" />
       <framework src="me.leolin:ShortcutBadger:1.1.17@aar" />
